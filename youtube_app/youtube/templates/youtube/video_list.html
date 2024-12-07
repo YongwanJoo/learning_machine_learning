@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+        form {
+            text-align: center;
+            margin: 20px;
+        }
+        form input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        form label {
+            margin-left: 10px;
+            font-size: 14px;
+        }
+        .results {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .video-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .video-item:last-child {
+            border-bottom: none;
+        }
+        .video-item a {
+            font-size: 18px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .video-item a:hover {
+            text-decoration: underline;
+        }
+        .video-meta {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>YouTube Video Search</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="query" placeholder="Search YouTube">
+    <label>
+        <input type="checkbox" name="add_music"> Add Music
+    </label>
+    <button type="submit">Search</button>
+</form>
+
+<div class="results">
+    {% for video in videos %}
+    <div class="video-item">
+        <a href="{{ video.url }}" target="_blank">{{ video.title }}</a>
+        <p class="video-meta">
+            {{ video.description }}<br>
+            Views: {{ video.view_count }} | Likes: {{ video.like_count }}
+        </p>
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>
